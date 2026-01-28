@@ -129,7 +129,7 @@ const Gallery = () => {
       {/* 2. Wide Overlay Slider */}
       <div
         ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-10 mx-auto"
+        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-2 md:px-10 mx-auto"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {projects.map((project) => (
