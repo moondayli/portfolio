@@ -1,13 +1,32 @@
 import React, { useRef } from 'react';
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 
-const projects = [
+// Define color type
+type ColorVariant = 'blue' | 'green' | 'purple' | 'orange' | 'cyan' | 'pink' | 'indigo' | 'gray' | 'red' | 'yellow';
+
+// Define tech stack interface
+interface TechStack {
+  name: string;
+  color: ColorVariant;
+}
+
+// Define project interface
+interface Project {
+  id: number;
+  title: string;
+  desc: string;
+  img: string;
+  link?: string;
+  techStack?: TechStack[];
+}
+
+const projects: Project[] = [
   {
     id: 1,
     title: 'Mailoo',
     desc: 'User friendly email marketing platform built on whop.',
     img: '/mailoo.png',
-    link: 'https://whop.com/dashboard/biz_2T7tC1fnFVo6d4/app-store/apps/app_XCFYaoUWi5GRaG/', // Add your actual link here
+    link: 'https://whop.com/dashboard/biz_2T7tC1fnFVo6d4/app-store/apps/app_XCFYaoUWi5GRaG/',
     techStack: [
       { name: 'Next.js', color: 'blue' },
       { name: 'Node.js', color: 'green' },
@@ -19,7 +38,7 @@ const projects = [
     title: 'Predica',
     desc: 'A platform for predicting the future built on solana.',
     img: '/predica.png',
-    link: 'https://predica.fun', // Add your actual link here
+    link: 'https://predica.fun',
     techStack: [
       { name: 'Next.js', color: 'gray' },
       { name: 'Solana', color: 'purple' },
@@ -31,7 +50,7 @@ const projects = [
     title: 'pintree',
     desc: 'A linktree alternative built on vercel.',
     img: '/pintree.png',
-    link: 'https://pintree.me', // Add your actual link here
+    link: 'https://pintree.me',
     techStack: [
       { name: 'Next.js', color: 'gray' },
       { name: 'Vercel', color: 'blue' },
@@ -48,7 +67,6 @@ const projects = [
       { name: 'TypeScript', color: 'indigo' },
       { name: 'Swift', color: 'orange' }
     ]
-    // No link - VIEW PROJECT button will not appear for this project
   },
 ];
 
@@ -56,7 +74,7 @@ const Gallery = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   
   // Color variants for tech stack tags
-  const colorVariants = {
+  const colorVariants: Record<ColorVariant, string> = {
     blue: 'bg-blue-500/90 text-white border-blue-400',
     green: 'bg-green-500/90 text-white border-green-400',
     purple: 'bg-purple-500/90 text-white border-purple-400',
@@ -70,7 +88,7 @@ const Gallery = () => {
   };
 
   const scroll = (direction: 'left' | 'right') => {
-      if (scrollRef.current) {
+    if (scrollRef.current) {
       const { scrollLeft } = scrollRef.current;
       const scrollAmount = 450;
       const scrollTo = direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount;
@@ -82,14 +100,14 @@ const Gallery = () => {
     <div className="w-full mb-24" id="projects">
       {/* 1. Header Section */}
       <div className="py-12 px-4 md:px-12 w-full max-w-[1600px] mx-auto">
-      <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <div>
-          <p className="text-gray-400 font-mono text-[10px] uppercase tracking-[0.4em] mb-1">
-            PORTFOLIO
-          </p>
-          <h2 className="text-3xl md:text-5xl font-bold font-mono tracking-tight uppercase">
-            PROJECTS Gallery
-          </h2>
+            <p className="text-gray-400 font-mono text-[10px] uppercase tracking-[0.4em] mb-1">
+              PORTFOLIO
+            </p>
+            <h2 className="text-3xl md:text-5xl font-bold font-mono tracking-tight uppercase">
+              PROJECTS Gallery
+            </h2>
           </div>
           <div className="flex gap-2">
             <button
@@ -140,9 +158,7 @@ const Gallery = () => {
                   {project.techStack.map((tech, index) => (
                     <span
                       key={index}
-                      className={`px-3 py-1 text-xs font-bold rounded-full border ${
-                        colorVariants[tech.color] || colorVariants.gray
-                      }`}
+                      className={`px-3 py-1 text-xs font-bold rounded-full border ${colorVariants[tech.color]}`}
                     >
                       {tech.name}
                     </span>
