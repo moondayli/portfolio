@@ -1,57 +1,98 @@
-import { FaTelegramPlane } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { MdEmail } from "react-icons/md";
+import React from 'react';
+import { Mail, Twitter, Send, ArrowUpRight } from 'lucide-react';
 
-export default function Contact() {
+const Contact = () => {
+  const contacts = [
+    {
+      name: "EMAIL",
+      label: "codeczarr@gmail.com",
+      icon: Mail,
+      link: "mailto:codeczarr@gmail.com",
+      dark: true
+    },
+    {
+      name: "X / TWITTER",
+      label: "@code_czar",
+      icon: Twitter,
+      link: "https://twitter.com/code_czar",
+      dark: false
+    },
+    {
+      name: "TELEGRAM",
+      label: "@thecodeczar",
+      icon: Send,
+      link: "https://t.me/thecodeczar",
+      dark: true
+    }
+  ];
+
   return (
-    <section
-      id="contact"
-      className="relative z-10 w-full min-h-screen flex items-center justify-center md:py-5 overflow-hidden"
-    >
-      <div
-        className="bg-[#0a0a0a] relative w-full h-full md:h-auto mx-auto md:rounded-3xl overflow-hidden"
-        style={{ maxWidth: "1400px", height: "min(95vh, 900px)" }}
-      >
-        {/* Center content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-6">
-          <h2
-            className="display-font text-red-500 tracking-[0.5em] text-center"
-            style={{ fontSize: 'clamp(28px, 4.5vw, 48px)' }}
-          >
-            REACH OUT
-          </h2>
-          <p
-            className="font-mono text-white/70 text-center max-w-[520px]"
-            style={{ fontSize: 'clamp(14px, 2vw, 18px)' }}
-          >
-            Pick your preferred platform below — I typically reply within a day.
-          </p>
-          <div className="mt-2 w-full max-w-[720px] flex flex-col gap-4">
+    <section className="py-28 px-6 md:px-12 w-full max-w-[1500px] mx-auto" id="contact">
+      {/* Title Section */}
+      <div className="mb-12 text-center">
+        <p className="text-gray-400 font-mono text-xs uppercase tracking-[0.4em] mb-2">
+          CONTACT
+        </p>
+        <h2 className="text-3xl md:text-5xl font-bold font-mono tracking-tight uppercase">
+          LET'S WORK TOGETHER
+        </h2>
+      </div>
+
+      {/* Contact Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px] mx-auto">
+        {contacts.map((contact, i) => {
+          const Icon = contact.icon;
+          return (
             <a
-              href="https://t.me/thecodeczar"
+              key={i}
+              href={contact.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full px-6 py-4 rounded-lg bg-red-500 text-black font-mono uppercase tracking-[0.25em] hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 text-base flex items-center justify-center gap-3"
+              className={`group relative overflow-hidden rounded-[2.5rem] p-12 transition-all duration-500 border ${
+                contact.dark 
+                  ? 'bg-[#0A0A0A] border-black hover:border-white' 
+                  : 'bg-[#FAFAFA] border-gray-100 hover:border-black'
+              }`}
             >
-              <FaTelegramPlane className="text-black" size={18} /> <span>Telegram</span>
+              <div className="relative z-10 flex items-start justify-between">
+                <div>
+                  <p className={`font-mono text-xs tracking-[0.3em] mb-3 ${
+                    contact.dark ? 'text-gray-400' : 'text-gray-500'
+                  }`}>
+                    {contact.name}
+                  </p>
+                  <h3 className={`font-mono text-2xl font-bold uppercase tracking-tight ${
+                    contact.dark ? 'text-white' : 'text-black'
+                  }`}>
+                    {contact.label}
+                  </h3>
+                </div>
+                <div className={`p-3 rounded-full transition-all duration-500 ${
+                  contact.dark 
+                    ? 'bg-white/10 group-hover:bg-white' 
+                    : 'bg-black/10 group-hover:bg-black'
+                }`}>
+                  <ArrowUpRight 
+                    size={20} 
+                    className={`transition-all duration-500 ${
+                      contact.dark 
+                        ? 'text-white group-hover:text-black' 
+                        : 'text-black group-hover:text-white'
+                    }`} 
+                  />
+                </div>
+              </div>
+              
+              {/* Icon Background */}
+              <div className="absolute bottom-4 right-4 opacity-5">
+                <Icon size={80} className={contact.dark ? 'text-white' : 'text-black'} />
+              </div>
             </a>
-            <a
-              href="https://x.com/code_czar"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full px-6 py-4 rounded-lg bg-red-500 text-black font-mono uppercase tracking-[0.25em] hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 text-base flex items-center justify-center gap-3"
-            >
-              <FaXTwitter className="text-black" size={18} /> <span>X/Twitter</span>
-            </a>
-            <a
-              href="mailto:codeczarr@gmail.com"
-              className="w-full px-6 py-4 rounded-lg bg-red-500 text-black font-mono uppercase tracking-[0.25em] hover:bg-red-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 text-base flex items-center justify-center gap-3"
-            >
-              <MdEmail className="text-black" size={18} /> <span>Email</span>
-            </a>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </section>
   );
-}
+};
+
+export default Contact;

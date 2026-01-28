@@ -1,85 +1,173 @@
-"use client";
+import React, { useRef } from 'react';
+import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 
-import { useEffect, useRef, useState } from "react";
-import ProjectsSlider from "./ProjectsSlider";
+const projects = [
+  {
+    id: 1,
+    title: 'Mailoo',
+    desc: 'User friendly email marketing platform built on whop.',
+    img: '/mailoo.png',
+    link: 'https://whop.com/dashboard/biz_2T7tC1fnFVo6d4/app-store/apps/app_XCFYaoUWi5GRaG/', // Add your actual link here
+    techStack: [
+      { name: 'Next.js', color: 'blue' },
+      { name: 'Node.js', color: 'green' },
+      { name: 'Whop API', color: 'purple' }
+    ]
+  },
+  {
+    id: 2,
+    title: 'Predica',
+    desc: 'A platform for predicting the future built on solana.',
+    img: '/predica.png',
+    link: 'https://predica.fun', // Add your actual link here
+    techStack: [
+      { name: 'Next.js', color: 'gray' },
+      { name: 'Solana', color: 'purple' },
+      { name: 'Web3.js', color: 'orange' }
+    ]
+  },
+  {
+    id: 3,
+    title: 'pintree',
+    desc: 'A linktree alternative built on vercel.',
+    img: '/pintree.png',
+    link: 'https://pintree.me', // Add your actual link here
+    techStack: [
+      { name: 'Next.js', color: 'gray' },
+      { name: 'Vercel', color: 'blue' },
+      { name: 'Tailwind CSS', color: 'cyan' }
+    ]
+  },
+  {
+    id: 4,
+    title: 'Time',
+    desc: 'A simple productivity app that helps you by turning your time into a progressbar.',
+    img: '/time.png',
+    techStack: [
+      { name: 'React Native', color: 'blue' },
+      { name: 'TypeScript', color: 'indigo' },
+      { name: 'Swift', color: 'orange' }
+    ]
+    // No link - VIEW PROJECT button will not appear for this project
+  },
+];
 
-export default function Gallery() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [progress, setProgress] = useState(0);
+const Gallery = () => {
+  const scrollRef = useRef(null);
 
-  useEffect(() => {
-    const onScroll = () => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight || 1;
-      // Progress increases from 0 to 1 as the next section approaches by one viewport
-      const p = Math.min(Math.max(-rect.top / vh, 0), 1);
-      setProgress(p);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  // Color variants for tech stack tags
+  const colorVariants = {
+    blue: 'bg-blue-500/90 text-white border-blue-400',
+    green: 'bg-green-500/90 text-white border-green-400',
+    purple: 'bg-purple-500/90 text-white border-purple-400',
+    orange: 'bg-orange-500/90 text-white border-orange-400',
+    cyan: 'bg-cyan-500/90 text-white border-cyan-400',
+    pink: 'bg-pink-500/90 text-white border-pink-400',
+    indigo: 'bg-indigo-500/90 text-white border-indigo-400',
+    gray: 'bg-gray-700/90 text-white border-gray-600',
+    red: 'bg-red-500/90 text-white border-red-400',
+    yellow: 'bg-yellow-500/90 text-gray-900 border-yellow-400',
+  };
 
-  const scale = 1 - progress * 0.1; // 1 -> 0.9
-  const opacity = 1 - progress * 0.5; // 1 -> 0.5
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const { scrollLeft } = scrollRef.current;
+      const scrollAmount = 450;
+      const scrollTo = direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount;
+      scrollRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' });
+    }
+  };
 
   return (
-    <section
-      ref={sectionRef as any}
-      id="gallery"
-      className="relative w-full min-h-screen flex items-center justify-center md:py-5"
-      style={{ zIndex: 0 }}
-    >
-      <div
-        className="bg-[#0a0a0a] sticky top-0 flex items-center justify-center w-full h-screen mx-auto md:rounded-3xl overflow-hidden"
-        style={{ maxWidth: "1400px", transform: `scale(${scale})`, opacity }}
-      >
-        <span className="absolute left-0 top-0 h-full w-[6px] bg-red-600" />
-
-        {/* Slider center layer */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-full px-6 sm:px-10 md:px-16">
-            <ProjectsSlider />
-          </div>
-        </div>
-
-        {/* Title */}
-        <div className="absolute left-6 top-6 sm:left-12 sm:top-12 z-10">
-          <h2
-            className="display-font text-red-500 tracking-[0.5em]"
-            style={{ fontSize: 'clamp(28px, 4.5vw, 48px)' }}
-          >
-            GALLERY
-          </h2>
-          <p
-            className="mt-2 font-mono text-white/60 tracking-[0.3em]"
-            style={{ fontSize: 'clamp(14px, 2.5vw, 18px)' }}
-          >
-            Past Projects
+    <div className="w-full mb-24" id="projects">
+      {/* 1. Header Section */}
+      <div className="py-12 px-4 md:px-12 w-full max-w-[1600px] mx-auto">
+      <div className="flex items-center justify-between">
+          <div>
+          <p className="text-gray-400 font-mono text-[10px] uppercase tracking-[0.4em] mb-1">
+            PORTFOLIO
           </p>
-        </div>
-
-        {/* Bottom-left nav */}
-        <div className="absolute left-6 bottom-6 sm:left-12 sm:bottom-12 z-10">
-          <div className="font-mono flex gap-12 text-sm uppercase tracking-[0.35em] text-white/35">
-            <div className="flex flex-col gap-1">
-              <span className="text-xs text-white/60">01</span>
-              <span className="font-semibold text-white/60">Home</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-xs text-red-500/80">02</span>
-              <span className="text-red-500 font-semibold">Gallery</span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-xs">03</span>
-              <span className="font-semibold text-white/60">Contact</span>
-            </div>
+          <h2 className="text-3xl md:text-5xl font-bold font-mono tracking-tight uppercase">
+            PROJECTS Gallery
+          </h2>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => scroll('left')}
+              className="p-2 border border-gray-200 rounded-full hover:bg-black hover:text-white transition-all bg-white"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={() => scroll('right')}
+              className="p-2 border border-gray-200 rounded-full hover:bg-black hover:text-white transition-all bg-white"
+            >
+              <ChevronRight size={20} />
+            </button>
           </div>
         </div>
       </div>
-    </section>
-  );
-}
 
+      {/* 2. Wide Overlay Slider */}
+      <div
+        ref={scrollRef}
+        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-10 mx-auto"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {projects.map((project) => (
+          <div
+            key={project.id}
+            className="relative flex-shrink-0 w-[400px] h-[250px] rounded-2xl overflow-hidden group cursor-pointer"
+          >
+            {/* Image Background */}
+            <img
+              src={project.img}
+              alt={project.title}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+
+            {/* Darker Gradient Overlay for readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+
+            {/* Content Overlay */}
+            <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
+              <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+              <p className="text-sm text-gray-200 mb-3 font-mono">{project.desc}</p>
+
+              {/* Tech Stack */}
+              {project.techStack && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.techStack.map((tech, index) => (
+                    <span
+                      key={index}
+                      className={`px-3 py-1 text-xs font-bold rounded-full border ${
+                        colorVariants[tech.color] || colorVariants.gray
+                      }`}
+                    >
+                      {tech.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* Conditionally render VIEW PROJECT button only if link exists */}
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all w-fit"
+                >
+                  VIEW PROJECT
+                  <ArrowUpRight size={16} />
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Gallery;

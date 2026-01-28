@@ -13,27 +13,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CodeCzar",
-  description: "Portfolio of CodeCzar — web3 engineer and product builder.",
+  title: "Czar",
+  description: "Portfolio of Czar — web3 engineer and product builder.",
   icons: {
     icon: "/czar.png",
   },
   openGraph: {
-    title: "CodeCzar",
-    description: "Portfolio of CodeCzar — web3 engineer and product builder.",
+    title: "Czar",
+    description: "Portfolio of Czar — web3 engineer and product builder.",
     images: [
       {
         url: "/preview.png",
         width: 1200,
         height: 630,
-        alt: "CodeCzar portfolio preview",
+        alt: "Czar portfolio preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CodeCzar",
-    description: "Portfolio of CodeCzar — web3 engineer and product builder.",
+    title: "Czar",
+    description: "Portfolio of Czar — web3 engineer and product builder.",
     images: ["/preview.png"],
   },
 };
