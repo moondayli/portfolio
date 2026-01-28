@@ -1,7 +1,15 @@
 import React, { useRef } from 'react';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
-const reviews = [
+interface Review {
+  id: number;
+  name: string;
+  role: string;
+  img: string;
+  text: string;
+}
+
+const reviews: Review[] = [
   {
     id: 1,
     name: "Ray",
@@ -26,9 +34,9 @@ const reviews = [
 ];
 
 const Reviews = () => {
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (direction) => {
+  const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const { scrollLeft } = scrollRef.current;
       const scrollAmount = 400;
