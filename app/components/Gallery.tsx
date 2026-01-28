@@ -53,8 +53,8 @@ const projects = [
 ];
 
 const Gallery = () => {
-  const scrollRef = useRef(null);
-
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
   // Color variants for tech stack tags
   const colorVariants = {
     blue: 'bg-blue-500/90 text-white border-blue-400',
