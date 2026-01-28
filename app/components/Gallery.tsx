@@ -69,8 +69,8 @@ const Gallery = () => {
     yellow: 'bg-yellow-500/90 text-gray-900 border-yellow-400',
   };
 
-  const scroll = (direction) => {
-    if (scrollRef.current) {
+  const scroll = (direction: 'left' | 'right') => {
+      if (scrollRef.current) {
       const { scrollLeft } = scrollRef.current;
       const scrollAmount = 450;
       const scrollTo = direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount;
